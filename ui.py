@@ -28,8 +28,8 @@ class UserInterface():
         self.event_handler()
 
     def generate_word(self):
-        return "close" # Test
-        # return random.choice(WORDS)
+        # return "close" # Test
+        return random.choice(WORDS)
 
     def check_real_word(self, word):
         return True if word in WORDS else False

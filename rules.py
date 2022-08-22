@@ -18,6 +18,7 @@ class Rules:
         remaining_guessed_letters = self.guessed_word
         remaining_final_letters = self.final_word
 
+        # Check for green and grey letters first
         for index, letter in enumerate(self.guessed_word):
             if (self.guessed_word[index] == self.final_word[index]):
                 remaining_final_letters[index] = ""
@@ -26,6 +27,7 @@ class Rules:
             else:
                 self.colour_results[index] = "GREY"
 
+        # Then yellow letters to account for duplicates
         for index, letter in enumerate(self.guessed_word):
             if ((remaining_guessed_letters[index] in remaining_final_letters) and (self.guessed_word[index] != self.final_word[index])):
                 new_index = remaining_final_letters.index(self.guessed_word[index])

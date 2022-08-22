@@ -1,11 +1,8 @@
-import string
 import pygame
 from colours import *
 
 pygame.font.init()
 FONT = pygame.font.Font("assets\Helvetica Neu Bold.ttf", 60)
-
-LETTERS = list(string.ascii_uppercase)
 
 class Grid:
     def __init__(self):
@@ -14,21 +11,16 @@ class Grid:
         self.current_col = 0
 
     def enter_letter(self, letter):
-        # print("To enter: ", self.current_row, " ", self.current_col)
         letter = letter.upper()
         if self.current_col == 5:
             return
         
         self.matrix[self.current_row][self.current_col].set_letter(letter)
         self.current_col += 1
-        # print("Enter_letter row/col: ", self.current_row, " ", self.current_col)
 
     def backspace(self):
-        if self.current_col < 0:
-            self.current_col = 0
-            return
-        
-        self.current_col = self.current_col - 1
+        if (self.current_col > 0):
+            self.current_col -= 1
         self.matrix[self.current_row][self.current_col].set_letter(None)
 
     def get_word(self):
@@ -49,7 +41,6 @@ class Grid:
         self.current_col = 0
 
     def draw(self, window):
-        # print("drawing cells")
         for row in self.matrix:
             for square in row:
                 square.draw(window)
@@ -77,15 +68,11 @@ class Square:
     def set_bg_colour(self, colour):
         self.bg_colour = colour
     
-    # TODO: finish function
     def draw(self, window):
-        # bg_colour = self.bg_colour if self.entered_row else WHITE
-        
         # Border rectangle
         border_colour = BLACK
         pygame.draw.rect(window, border_colour, pygame.Rect(self.x, self.y, self.size, self.size))
 
-        # if not self.entered_row:
         # Actual rectangle
         pygame.draw.rect(window, self.bg_colour, pygame.Rect(self.x + 2, self.y + 2, self.size - 4, self.size - 4))
 
@@ -94,4 +81,3 @@ class Square:
             text_col = BLACK # if not self.entered_row else WHITE
             text = FONT.render(self.letter, False, text_col)
             window.blit(text, (self.x + 10, self.y))
-            # print("draw(cell) row/col: ", self.row, " ", self.col)

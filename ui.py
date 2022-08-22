@@ -28,7 +28,7 @@ class UserInterface():
         self.event_handler()
 
     def generate_word(self):
-        return "socks" # Test
+        return "close" # Test
         # return random.choice(WORDS)
 
     def check_real_word(self, word):

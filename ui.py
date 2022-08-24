@@ -1,6 +1,8 @@
 import pygame
 import random
 from pygame.locals import *
+from pygame_vkeyboard import *
+from keyboard import *
 from grid import Grid
 from rules import Rules
 from letters import LETTERS
@@ -12,15 +14,24 @@ pygame.init()
 pygame.font.init()
 FONT = pygame.font.Font("assets\Helvetica Neu Bold.ttf", 20)
 ICON = pygame.image.load("assets\icon.png")
+QWERTY = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM']
+
+def consumer(text):
+    print(repr('Current text state: &s' % text))
 
 class UserInterface():
     WIDTH = 575
-    HEIGHT = 800
+    HEIGHT = 900
 
     def __init__(self):
         self.screen = pygame.display.set_mode([self.WIDTH, self.HEIGHT])
         pygame.display.set_caption("Wordle (Fake)")
         pygame.display.set_icon(ICON)
+        layout = VKeyboardLayout(VKeyboardLayout.AZERTY)
+        keyboard = VKeyboard(self.screen, consumer, layout, renderer = KeyboardRenderer.WORDLE)
+        keyboard.enable()
+        keyboard.draw()
+
         self.final_word = self.generate_word()
         self.grid = Grid()
         self.guess = 0
@@ -48,7 +59,7 @@ class UserInterface():
     def render(self):
         self.screen.fill(WHITE)
         self.grid.draw(self.screen)
-        pygame.display.update()
+        pygame.display.flip() # was .update()
 
     def event_handler(self):
         rules = Rules()
